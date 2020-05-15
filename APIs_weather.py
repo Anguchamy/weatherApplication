@@ -40,7 +40,7 @@ class mainDialogBox ( wx.Dialog ):
         gSizer1 = wx.GridSizer( 0, 2, 0, 0 )
         
         self.textCtrl_CityOrCountryName = wx.TextCtrl( self.panelWeather, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-        gSizer1.Add( self.textCtrl_CityOrCountryName, 0, wx.ALIGN_CENTER|wx.ALL|wx.EXPAND, 5 )
+        gSizer1.Add( self.textCtrl_CityOrCountryName, 0, wx.ALL, 5 )
         
         self.buttonGo = wx.Button( self.panelWeather, wx.ID_ANY, u"Go!", wx.DefaultPosition, wx.DefaultSize, 0 )
         gSizer1.Add( self.buttonGo, 0, wx.ALL|wx.EXPAND, 5 )
@@ -106,10 +106,11 @@ class mainDialogBox ( wx.Dialog ):
         pass
     
     def getDataFromAPI(self,name):
-        #name = self.textCtrl_CityOrCountryName.value
+        #print(name)
         api_address='http://api.openweathermap.org/data/2.5/weather?appid=0c42f7f6b53b244c78a418f4f181282a&q='
         url = api_address + name
         json_data = requests.get(url).json()
+        print(json_data)
         try:
             int(json_data['main']['temp']) - 273.15
             #print(format_add)
@@ -126,10 +127,7 @@ class mainDialogBox ( wx.Dialog ):
         cloudiness = str(int(json_data['clouds']['all']))+ "%"
         
         return [temperature,humidity,forcast,cloudiness]
-        
-        
-        
-        
+
         
     # Virtual event handlers, overide them in your derived class
     def buttonGoOnButtonClick( self, event ):
@@ -152,11 +150,3 @@ class MainApp(wx.App):
 if __name__ == "__main__":
 	app = MainApp()
 	app.MainLoop()
-            
-            
-            
-            
-            
-            
-            
-            
